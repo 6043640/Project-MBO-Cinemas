@@ -1,0 +1,256 @@
+body {
+    background: #1a1a1a;
+    color: #fff;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 60px 0 60px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #c88336;
+    letter-spacing: 0.2em;
+}
+
+.logo svg {
+    margin-left: 20px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-buttons a {
+    background: #1a1a1a;
+    color: #c88336;
+    border: 2px solid #c88336;
+    padding: 12px 32px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s;
+}
+
+.nav-buttons a:hover {
+    background: #c88336;
+    color: #1a1a1a;
+}
+
+.profile-icon {
+    width: 48px;
+    height: 48px;
+    background: url('../img/profile_icon.png') center/cover no-repeat;
+    opacity: 0.3;
+}
+
+.blur-bg {
+    width: 100vw;
+    height: 220px;
+    background: url('../img/cinema_blur.jpg') center/cover no-repeat;
+    filter: blur(6px);
+    margin-top: 30px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 1px 60px 0 60px;
+}
+
+.info-block {
+    border: 2px solid #c88336;
+    padding: 18px 22px;
+    background: rgba(26,26,26,0.95);
+    min-height: 170px;
+}
+
+@media (max-width: 900px) {
+    .header-bar, .info-grid {
+        flex-direction: column;
+        padding: 20px;
+    }
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.logo-img {
+    height: 90px;
+    width: auto;
+    display: block;
+}
+
+.login-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-left: 30px;
+    height: 48px;
+    width: 48px;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+.login-icon img {
+    height: 48px;
+    width: 48px;
+    object-fit: contain;
+    transition: filter 0.2s;
+}
+.login-icon:hover img {
+    filter: brightness(1) invert(0.2) sepia(1) hue-rotate(-30deg) saturate(5);
+}
+
+.banner-img {
+    width: 100vw;
+    height: 350px;
+    background: 
+        linear-gradient(to bottom, rgba(26,26,26,0) 60%, #1a1a1a 100%),
+        linear-gradient(to top, rgba(26,26,26,0) 60%, #1a1a1a 100%),
+        url('../img/banner-cinema.jpg') center center/cover no-repeat;
+    display: block;
+    margin-bottom: 0;
+}
+
+.films-section {
+    padding: 20px 60px 40px 60px;
+}
+
+.film-filter-form {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.film-lijst {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.film-card {
+    background: rgba(26,26,26,0.95);
+    border: 2px solid #c88336;
+    border-radius: 8px;
+    padding: 18px 18px 24px 18px;
+    text-align: center;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.film-img {
+    width: 180px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.15);
+}
+
+.film-card h3 {
+    margin: 0 0 8px 0;
+    color: #c88336;
+    font-size: 1.3rem;
+    letter-spacing: 0.05em;
+}
+
+.film-card p {
+    margin: 0 0 18px 0;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.film-btn {
+    display: inline-block;
+    background: #1a1a1a;
+    color: #c88336;
+    border: 2px solid #c88336;
+    padding: 10px 28px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+}
+.film-btn:hover {
+    background: #c88336;
+    color: #1a1a1a;
+}
+
+.reserveren-title {
+    text-align: center;
+    color: #c88336;
+    margin-bottom: 30px;
+}
+
+.reserveren-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 60vh;
+}
+
+.reserveren-form {
+    background: rgba(26,26,26,0.95);
+    border: 2px solid #c88336;
+    border-radius: 8px;
+    padding: 32px 32px 24px 32px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.reserveren-form input,
+.reserveren-form select {
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #c88336;
+    background: #222;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.reserveren-form input:focus,
+.reserveren-form select:focus {
+    outline: 2px solid #c88336;
+}
+
+.reserveren-form label {
+    color: #c88336;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+@media (max-width: 600px) {
+    .reserveren-wrapper {
+        padding: 0 10px;
+    }
+    .reserveren-form {
+        padding: 18px 6px;
+    }
+}
+
