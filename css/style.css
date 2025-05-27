@@ -107,6 +107,7 @@ body {
     transition: filter 0.2s;
 }
 .login-icon img {
+    background-color: #c88336;
     height: 48px;
     width: 48px;
     object-fit: contain;
@@ -253,4 +254,3 @@ body {
         padding: 18px 6px;
     }
 }
-
