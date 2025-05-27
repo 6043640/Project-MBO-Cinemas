@@ -13,11 +13,11 @@
                 <img src="../img/mbo-cinemas-logo.png" alt="MBO Cinemas logo" class="logo-img">
             </a>
             <nav class="nav-buttons" aria-label="Hoofdmenu">
-                <a href="index.html">Home</a>
-                <a href="reserveren.html">Reserveer</a>
-                <a href="films.html">Films</a>
+                <a href="index.php">Home</a>
+                <a href="reserveren.php">Reserveer</a>
+                <a href="films.php">Films</a>
             </nav>
-            <a href="login.html" class="login-icon" title="Inloggen">
+            <a href="login.php" class="login-icon" title="Inloggen">
                 <img src="../img/LoginLogo.png" alt="Login" />
             </a>
         </section>
