@@ -74,5 +74,8 @@
         </article>
     </section>
 </main>
+ <footer class='voeter'>
+        <p>&copy; 2025 MBO Cinemas</p>
+    </footer>
 </body>
 </html>

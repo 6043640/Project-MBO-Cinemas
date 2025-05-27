@@ -31,28 +31,31 @@
                     <img src="../img/badboys.jpg" alt="Bad Boys" class="film-img">
                     <h3>Bad Boys</h3>
                     <p>Actie, Komedie - Twee agenten nemen het op tegen de onderwereld van Miami.</p>
-                    <a href="films.php" class="film-btn">Reserveer</a>
+                    <a href="reserveren.php" class="film-btn">Reserveer</a>
                 </li>
                 <li class="film-card">
                     <img src="../img/fightclub.jpg" alt="Fight Club" class="film-img">
                     <h3>Fight Club</h3>
                     <p>Drama, Thriller - Een man raakt verwikkeld in een geheime vechtclub.</p>
-                    <a href="films.php" class="film-btn">Reserveer</a>
+                    <a href="reserveren.php" class="film-btn">Reserveer</a>
                 </li>
                 <li class="film-card">
                     <img src="../img/godfather.jpg" alt="Godfather" class="film-img">
                     <h3>The Godfather</h3>
                     <p>Misdaad, Drama - Het verhaal van een machtige maffiafamilie.</p>
-                    <a href="films.php" class="film-btn">Reserveer</a>
+                    <a href="reserveren.php" class="film-btn">Reserveer</a>
                 </li>
                 <li class="film-card">
                     <img src="../img/pulpfiction.jpg" alt="Pulp Fiction" class="film-img">
                     <h3>Pulp Fiction</h3>
                     <p>Misdaad, Komedie - Meerdere verhaallijnen kruisen elkaar in Los Angeles.</p>
-                    <a href="films.php" class="film-btn">Reserveer</a>
+                    <a href="reserveren.php" class="film-btn">Reserveer</a>
                 </li>
             </ul>
         </section>
     </main>
+     <footer class='voeter'>
+        <p>&copy; 2025 MBO Cinemas</p>
+    </footer>
 </body>
 </html>

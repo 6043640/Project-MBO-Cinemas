@@ -40,7 +40,7 @@
             </div>
         </section>
     </main>
-    <footer>
+    <footer class='voeter'>
         <p>&copy; 2025 MBO Cinemas</p>
     </footer>
 </body>
