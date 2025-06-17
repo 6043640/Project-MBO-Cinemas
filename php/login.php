@@ -9,7 +9,6 @@ $error = '';
 $success = '';
 
 if (isset($_POST['register'])) {
-
     $username = trim($_POST['reg_username']);
     $email = trim($_POST['reg_email']);
     $password = $_POST['reg_password'];
@@ -42,10 +41,16 @@ if (isset($_POST['login'])) {
         $stmt->execute([':email' => $email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($user && password_verify($password, $user['wachtwoord'])) {
-            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['klant_id'] = $user['id'];
             $_SESSION['username'] = $user['naam'];
             $_SESSION['rol'] = $user['rol'];
-            $success = "Je bent succesvol ingelogd als " . htmlspecialchars($user['naam']) . "!";
+            if ($user['rol'] === 'medewerker') {
+                header('Location: medewerker_dashboard.php');
+                exit;
+            } else {
+                header('Location: index.php');
+                exit;
+            }
         } else {
             $error = "Ongeldige inloggegevens.";
         }
@@ -72,6 +77,9 @@ if (isset($_POST['login'])) {
                 <a href="index.php">Home</a>
                 <a href="reserveren.php">Reserveer</a>
                 <a href="films.php">Films</a>
+                <?php if (isset($_SESSION['klant_id'])): ?>
+                    <a href="mijn_reserveringen.php">Mijn Reserveringen</a>
+                <?php endif; ?>
             </nav>
             <a href="login.php" class="login-icon" title="Inloggen">
                 <img src="../img/LoginLogo.png" alt="Login" />
@@ -82,7 +90,7 @@ if (isset($_POST['login'])) {
     <section class="blur-bg" aria-hidden="true"></section>
     <main>
         <section class="films-section">
-            <h2 class="reserveren-title">Inloggen of Registreren</h2>
+            <h2 class="reserveren-title">Inloggen or Registreren</h2>
             <div class="reserveren-wrapper">
                 <div style="width:100%;">
                     <?php if ($error): ?>
@@ -96,7 +104,7 @@ if (isset($_POST['login'])) {
                         </div>
                     <?php endif; ?>
                     <div style="display:flex;gap:40px;flex-wrap:wrap;">
-                        <!-- Login Formulier -->
+                        
                         <form class="reserveren-form" method="post" style="min-width:250px;">
                             <h3 style="color:#c88336;">Inloggen</h3>
                             <label for="login_email">E-mail</label>
@@ -105,7 +113,7 @@ if (isset($_POST['login'])) {
                             <input type="password" id="login_password" name="login_password" placeholder="Wachtwoord" required>
                             <button type="submit" name="login" class="film-btn">Inloggen</button>
                         </form>
-                        <!-- Registratie Formulier -->
+
                         <form class="reserveren-form" method="post" style="min-width:250px;">
                             <h3 style="color:#c88336;">Registreren</h3>
                             <label for="reg_username">Gebruikersnaam</label>

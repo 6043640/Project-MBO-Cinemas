@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -15,6 +19,9 @@
                 <a href="index.php">Home</a>
                 <a href="reserveren.php">Reserveer</a>
                 <a href="films.php">Films</a>
+                <?php if (isset($_SESSION['klant_id'])): ?>
+                    <a href="mijn_reserveringen.php">Mijn Reserveringen</a>
+                <?php endif; ?>
             </nav>
             <a href="login.php" class="login-icon" title="Inloggen">
                 <img src="../img/LoginLogo.png" alt="Login" />

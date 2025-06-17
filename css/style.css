@@ -302,3 +302,25 @@ body {
     background: #c88336;
     color: #1a1a1a;
 }
+
+.reserveringen-tabel {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: rgba(26,26,26,0.95);
+    border: 2px solid #c88336;
+}
+.reserveringen-tabel th, .reserveringen-tabel td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #c88336;
+}
+.reserveringen-tabel th {
+    background: #c88336;
+    color: #1a1a1a;
+    font-weight: bold;
+}
+.reserveringen-tabel tr:hover {
+    background: rgba(200,131,54,0.1);
+}
+
