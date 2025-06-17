@@ -1,53 +1,31 @@
 <?php
-$films = [
-    [
-        'titel' => 'Bad Boys',
-        'genre' => 'Actie, Komedie',
-        'locatie' => 'Alphen aan den Rijn',
-        'datum' => '2025-06-20',
-        'afbeelding' => '../img/bad boys.jpg'
-    ],
-    [
-        'titel' => 'Fight Club',
-        'genre' => 'Drama, Thriller',
-        'locatie' => 'Alphen aan den Rijn',
-        'datum' => '2025-06-21',
-        'afbeelding' => '../img/fight club.jpg'
-    ],
-    [
-        'titel' => 'Godfather',
-        'genre' => 'Misdaad, Drama',
-        'locatie' => 'Alphen aan den Rijn',
-        'datum' => '2025-06-22',
-        'afbeelding' => '../img/godfather.jpg'
-    ],
-    [
-        'titel' => 'Pulp Fiction',
-        'genre' => 'Misdaad, Komedie',
-        'locatie' => 'Alphen aan den Rijn',
-        'datum' => '2025-06-23',
-        'afbeelding' => '../img/pulp fiction.jpg'
-    ]
-];
+require_once '../config/database.php';
+session_start();
+$db = (new Database())->connect();
 
-// Zoekterm ophalen en normaliseren
-$zoekterm = isset($_GET['zoek']) ? strtolower(trim($_GET['zoek'])) : '';
+$zoekterm = isset($_GET['zoek']) ? trim($_GET['zoek']) : '';
 
-// Filteren op zoekterm (titel, genre, locatie, datum) - alleen tonen wat overeenkomt
-$gefilterdeFilms = [];
-if ($zoekterm !== '') {
-    foreach ($films as $film) {
-        if (
-            strpos(strtolower($film['titel']), $zoekterm) !== false ||
-            strpos(strtolower($film['genre']), $zoekterm) !== false ||
-            strpos(strtolower($film['locatie']), $zoekterm) !== false ||
-            strpos(strtolower($film['datum']), $zoekterm) !== false
-        ) {
-            $gefilterdeFilms[] = $film;
-        }
+try {
+    
+    $sql = "SELECT * FROM films";
+    
+    
+    $params = [];
+    if (!empty($zoekterm)) {
+        $sql .= " WHERE 
+            LOWER(titel) LIKE :zoek OR
+            LOWER(genre) LIKE :zoek OR
+            LOWER(locatie) LIKE :zoek OR
+            LOWER(datum) LIKE :zoek";
+        $params[':zoek'] = '%' . strtolower($zoekterm) . '%';
     }
-} else {
-    $gefilterdeFilms = $films;
+
+    $stmt = $db->prepare($sql);
+    $stmt->execute($params);
+    $films = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch(PDOException $e) {
+    die("Fout bij het ophalen van films: " . $e->getMessage());
 }
 ?>
 
@@ -60,36 +38,25 @@ if ($zoekterm !== '') {
 </head>
 <body>
 <header>
-    <section class="header-bar">
-        <a href="../index.php" class="logo" aria-label="MBO Cinemas">
-            <img src="../img/mbo-cinemas-logo.png" alt="MBO Cinemas logo" class="logo-img">
-        </a>
-        <nav class="nav-buttons" aria-label="Hoofdmenu">
-            <a href="index.php">Home</a>
-            <a href="reserveren.php">Reserveer</a>
-            <a href="films.php">Films</a>
-        </nav>
-        <a href="../login.php" class="login-icon" title="Inloggen">
-            <img src="../img/LoginLogo.png" alt="Login" />
-        </a>
-    </section>
-    <section class="banner-img"></section>
 </header>
 
 <section class="blur-bg" aria-hidden="true"></section>
 <main>
     <form method="GET" action="films.php" class="search-form">
-        <input type="text" name="zoek" placeholder="Zoek films op titel, genre, locatie, datum" value="<?= htmlspecialchars(isset($_GET['zoek']) ? $_GET['zoek'] : '') ?>" />
+        <input type="text" name="zoek" placeholder="Zoek films op titel, genre, locatie, datum" 
+               value="<?= htmlspecialchars($zoekterm) ?>">
         <button type="submit">Zoeken</button>
     </form>
 
     <section class="films-section">
         <h2 class="reserveren-title">Nu in de bioscoop</h2>
-        <?php if (count($gefilterdeFilms) > 0): ?>
+        <?php if (count($films) > 0): ?>
         <ul class="film-lijst">
-            <?php foreach ($gefilterdeFilms as $film): ?>
+            <?php foreach ($films as $film): ?>
                 <li class="film-card">
-                    <img src="<?= htmlspecialchars($film['afbeelding']) ?>" alt="<?= htmlspecialchars($film['titel']) ?>" class="film-img">
+                    <img src="<?= htmlspecialchars($film['afbeelding']) ?>" 
+                         alt="<?= htmlspecialchars($film['titel']) ?>" 
+                         class="film-img">
                     <h3><?= htmlspecialchars($film['titel']) ?></h3>
                     <p><?= htmlspecialchars($film['genre']) ?></p>
                     <p><strong>Locatie:</strong> <?= htmlspecialchars($film['locatie']) ?></p>
