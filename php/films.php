@@ -1,13 +1,54 @@
 <?php
-require_once '../config/database.php';
-require_once '../classes/Film.php';
+$films = [
+    [
+        'titel' => 'Bad Boys',
+        'genre' => 'Actie, Komedie',
+        'locatie' => 'Alphen aan den Rijn',
+        'datum' => '2025-06-20',
+        'afbeelding' => '../img/bad boys.jpg'
+    ],
+    [
+        'titel' => 'Fight Club',
+        'genre' => 'Drama, Thriller',
+        'locatie' => 'Alphen aan den Rijn',
+        'datum' => '2025-06-21',
+        'afbeelding' => '../img/fight club.jpg'
+    ],
+    [
+        'titel' => 'Godfather',
+        'genre' => 'Misdaad, Drama',
+        'locatie' => 'Alphen aan den Rijn',
+        'datum' => '2025-06-22',
+        'afbeelding' => '../img/godfather.jpg'
+    ],
+    [
+        'titel' => 'Pulp Fiction',
+        'genre' => 'Misdaad, Komedie',
+        'locatie' => 'Alphen aan den Rijn',
+        'datum' => '2025-06-23',
+        'afbeelding' => '../img/pulp fiction.jpg'
+    ]
+];
 
-$db = new Database();
-$pdo = $db->connect();
+// Zoekterm ophalen en normaliseren
+$zoekterm = isset($_GET['zoek']) ? strtolower(trim($_GET['zoek'])) : '';
 
-$filmModel = new Film($pdo);
-$zoekterm = $_GET['zoek'] ?? '';
-$films = $filmModel->zoekFilms($zoekterm);
+// Filteren op zoekterm (titel, genre, locatie, datum) - alleen tonen wat overeenkomt
+$gefilterdeFilms = [];
+if ($zoekterm !== '') {
+    foreach ($films as $film) {
+        if (
+            strpos(strtolower($film['titel']), $zoekterm) !== false ||
+            strpos(strtolower($film['genre']), $zoekterm) !== false ||
+            strpos(strtolower($film['locatie']), $zoekterm) !== false ||
+            strpos(strtolower($film['datum']), $zoekterm) !== false
+        ) {
+            $gefilterdeFilms[] = $film;
+        }
+    }
+} else {
+    $gefilterdeFilms = $films;
+}
 ?>
 
 <!DOCTYPE html>
@@ -24,8 +65,8 @@ $films = $filmModel->zoekFilms($zoekterm);
             <img src="../img/mbo-cinemas-logo.png" alt="MBO Cinemas logo" class="logo-img">
         </a>
         <nav class="nav-buttons" aria-label="Hoofdmenu">
-            <a href="../index.php">Home</a>
-            <a href="../reserveren.php">Reserveer</a>
+            <a href="index.php">Home</a>
+            <a href="reserveren.php">Reserveer</a>
             <a href="films.php">Films</a>
         </nav>
         <a href="../login.php" class="login-icon" title="Inloggen">
@@ -38,23 +79,17 @@ $films = $filmModel->zoekFilms($zoekterm);
 <section class="blur-bg" aria-hidden="true"></section>
 <main>
     <form method="GET" action="films.php" class="search-form">
-        <input type="text" name="zoek" placeholder="Zoek films op titel, genre, locatie, datum" value="<?= htmlspecialchars($zoekterm) ?>" />
+        <input type="text" name="zoek" placeholder="Zoek films op titel, genre, locatie, datum" value="<?= htmlspecialchars(isset($_GET['zoek']) ? $_GET['zoek'] : '') ?>" />
         <button type="submit">Zoeken</button>
     </form>
 
     <section class="films-section">
         <h2 class="reserveren-title">Nu in de bioscoop</h2>
-        <?php if (count($films) > 0): ?>
+        <?php if (count($gefilterdeFilms) > 0): ?>
         <ul class="film-lijst">
-            <?php foreach ($films as $film): ?>
+            <?php foreach ($gefilterdeFilms as $film): ?>
                 <li class="film-card">
-                    <?php
-                        $imgFile = '../img/' . htmlspecialchars($film['titel']) . '.jpg';
-                        if (!file_exists($imgFile)) {
-                            $imgFile = '../img/placeholder.png';
-                        }
-                    ?>
-                    <img src="<?= $imgFile ?>" alt="<?= htmlspecialchars($film['titel']) ?>" class="film-img">
+                    <img src="<?= htmlspecialchars($film['afbeelding']) ?>" alt="<?= htmlspecialchars($film['titel']) ?>" class="film-img">
                     <h3><?= htmlspecialchars($film['titel']) ?></h3>
                     <p><?= htmlspecialchars($film['genre']) ?></p>
                     <p><strong>Locatie:</strong> <?= htmlspecialchars($film['locatie']) ?></p>
@@ -67,7 +102,6 @@ $films = $filmModel->zoekFilms($zoekterm);
             <p style="color:white;">Geen films gevonden die aan je zoekopdracht voldoen.</p>
         <?php endif; ?>
     </section>
-
 </main>
 <footer class="voeter">
     <p>&copy; 2025 MBO Cinemas</p>
